@@ -1,4 +1,4 @@
-package core.premier.league.premierleaguecore;
+package core.premier.league;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

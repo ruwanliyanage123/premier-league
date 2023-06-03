@@ -1,4 +1,4 @@
-package core.premier.league.premierleaguecore;
+package core.premier.league;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
