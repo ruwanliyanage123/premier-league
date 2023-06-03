@@ -8,8 +8,19 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CSVFileDataCollectorFacadeImpl implements FileDataCollectorFacade {
+public final class CSVFileDataCollectorFacadeImpl implements FileDataCollectorFacade {
     private List<RowScoreData> rowScoreDataList = new ArrayList<>();
+
+    private CSVFileDataCollectorFacadeImpl() {
+    }
+
+    private static class CSVFileDataCollectorFacadeImplLazyLoader {
+        public static final CSVFileDataCollectorFacadeImpl INSTANCE = new CSVFileDataCollectorFacadeImpl();
+    }
+
+    public static CSVFileDataCollectorFacadeImpl getInstance() {
+        return CSVFileDataCollectorFacadeImplLazyLoader.INSTANCE;
+    }
 
     @Override
     public List<RowScoreData> collectData(String filePath) {
