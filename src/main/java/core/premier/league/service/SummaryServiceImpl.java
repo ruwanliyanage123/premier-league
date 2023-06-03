@@ -15,8 +15,8 @@ public class SummaryServiceImpl implements SummaryService{
     @Autowired
     private ScoreCardFacade scoreCardFacade;
     @Override
-    public Summary findMatchSummary() {
-        return null;
+    public Summary findMatchSummary() throws SummaryNotReadyException {
+        return scoreCardFacade.getMatchSummary();
     }
 
     @Override

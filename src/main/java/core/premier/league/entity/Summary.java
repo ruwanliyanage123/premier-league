@@ -17,7 +17,5 @@ public class Summary {
     private String team2Wickets;
     private String team1Overs;
     private String team2Overs;
-    private int runGap;
-    private int remainBalls;
-    private int remainedWickets;
+    private String winBy;
 }

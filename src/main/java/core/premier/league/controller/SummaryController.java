@@ -1,6 +1,7 @@
 package core.premier.league.controller;
 
 import core.premier.league.entity.Player;
+import core.premier.league.entity.Summary;
 import core.premier.league.exception.FileDataCollectionException;
 import core.premier.league.exception.SummaryNotReadyException;
 import core.premier.league.service.ScoreCardService;
@@ -21,10 +22,19 @@ public class SummaryController {
     @Autowired
     private SummaryService summaryService;
 
-    @GetMapping(value = "/sum")
-    public ResponseEntity<Map<String, List<Player>>> getSummary() {
+    @GetMapping(value = "/result")
+    public ResponseEntity<Map<String, List<Player>>> getSummaryResult() {
         try {
             return new ResponseEntity<>(summaryService.findSummaryResult(), HttpStatus.OK);
+        } catch (SummaryNotReadyException exception) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @GetMapping(value = "/sum")
+    public ResponseEntity<Summary> getMatchSummary() {
+        try {
+            return new ResponseEntity<>(summaryService.findMatchSummary(), HttpStatus.OK);
         } catch (SummaryNotReadyException exception) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

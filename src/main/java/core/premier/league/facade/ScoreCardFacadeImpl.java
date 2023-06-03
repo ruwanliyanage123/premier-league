@@ -2,6 +2,7 @@ package core.premier.league.facade;
 
 import core.premier.league.entity.Player;
 import core.premier.league.entity.RowScoreData;
+import core.premier.league.entity.Summary;
 import core.premier.league.entity.Team;
 import core.premier.league.exception.FileDataCollectionException;
 import core.premier.league.exception.SummaryNotReadyException;
@@ -47,7 +48,7 @@ public class ScoreCardFacadeImpl implements ScoreCardFacade {
 
     @Override
     public Map<String, List<Player>> getMatchSummaryResult() throws SummaryNotReadyException {
-        if (team1BattingList == null || team2BowlingList == null || team2BattingList == null || team1BowlingList == null) {
+        if (isMatchNotFinished()) {
             throw new SummaryNotReadyException("Summary Not Ready Yet");
         }
         Map<String, List<Player>> summary = new HashMap<>();
@@ -64,6 +65,31 @@ public class ScoreCardFacadeImpl implements ScoreCardFacade {
         summary.put(Constants.FIRST_BOWLING, team1Bowl);
         summary.put(Constants.SECOND_BOWLING, team2Bowl);
         return summary;
+    }
+
+    @Override
+    public Summary getMatchSummary() throws SummaryNotReadyException {
+        if (isMatchNotFinished()) {
+            throw new SummaryNotReadyException("Summary Not Ready Yet");
+        }
+        String winner = team1.getTotalRuns() < team2.getTotalRuns() ? team2.getTeamName() : team1.getTeamName();
+        int winByWicket = 11 - team2.getWickets();
+        int winByRuns = team1.getTotalRuns() - team2.getTotalRuns();
+        String winBy = team1.getTotalRuns() < team2.getTotalRuns() ? team2.getTeamName() + " won by " + winByWicket + "wickets " : team1.getTeamName() + " won by " + winByRuns + " runs";
+        return Summary.builder()
+                .winner(winner)
+                .team1Overs(String.valueOf(team1.getOvers()))
+                .team2Overs(String.valueOf(team2.getOvers()))
+                .team1Runs(String.valueOf(team1.getTotalRuns()))
+                .team2Runs(String.valueOf(team2.getTotalRuns()))
+                .team1Wickets(String.valueOf(team1.getWickets()))
+                .team2Wickets(String.valueOf(team2.getWickets()))
+                .winBy(winBy)
+                .build();
+    }
+
+    private boolean isMatchNotFinished() {
+        return team1BattingList == null || team2BowlingList == null || team2BattingList == null || team1BowlingList == null;
     }
 
     private void init(String path) throws FileDataCollectionException {
