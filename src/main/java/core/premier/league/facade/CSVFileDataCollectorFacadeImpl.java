@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class CSVFileDataCollectorFacadeImpl implements FileDataCollectorFacade {
-    private List<RowScoreData> rowScoreDataList = new ArrayList<>();
-
     private CSVFileDataCollectorFacadeImpl() {
     }
 
@@ -24,6 +22,7 @@ public final class CSVFileDataCollectorFacadeImpl implements FileDataCollectorFa
 
     @Override
     public List<RowScoreData> collectData(String filePath) throws FileDataCollectionException {
+        List<RowScoreData> rowScoreDataList = new ArrayList<>();
         try {
             int rowNumber = 0;
             String splitBy = ",";
