@@ -3,6 +3,7 @@ package core.premier.league.controller;
 import core.premier.league.entity.Player;
 import core.premier.league.exception.FileDataCollectionException;
 import core.premier.league.service.ScoreCardService;
+import core.premier.league.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +20,18 @@ public class ScoreCardController {
     private ScoreCardService scoreCardService;
     @GetMapping(value = "/first")
     public ResponseEntity<List<Player>> getFirstBatScore(){
-        System.out.println("the controller");
         try {
-            return new ResponseEntity<>(scoreCardService.getFirstInning().get("batting"), HttpStatus.OK);
-        } catch (FileDataCollectionException e) {
+            return new ResponseEntity<>(scoreCardService.getFirstInning().get(Constants.BATTING), HttpStatus.OK);
+        } catch (FileDataCollectionException exception) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @GetMapping(value = "/second")
+    public ResponseEntity<List<Player>> getSecondBatScore(){
+        try {
+            return new ResponseEntity<>(scoreCardService.getSecondInning().get(Constants.BATTING), HttpStatus.OK);
+        } catch (FileDataCollectionException exception) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }

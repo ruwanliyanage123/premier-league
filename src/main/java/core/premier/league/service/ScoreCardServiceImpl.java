@@ -16,12 +16,11 @@ public class ScoreCardServiceImpl implements ScoreCardService{
 
     @Override
     public Map<String, List<Player>> getFirstInning() throws FileDataCollectionException {
-        scoreCardFacade.getFirstInningResults("/Users/ruwan/Desktop/LPL/match_result.csv");
-        return null;
+        return scoreCardFacade.getFirstInningResults("/Users/ruwan/Desktop/LPL/match_result.csv");
     }
 
     @Override
-    public Map<String, List<Player>> getSecondInning() {
-        return null;
+    public Map<String, List<Player>> getSecondInning() throws FileDataCollectionException{
+        return scoreCardFacade.getSecondInningResults("/Users/ruwan/Desktop/LPL/match_result.csv");
     }
 }
