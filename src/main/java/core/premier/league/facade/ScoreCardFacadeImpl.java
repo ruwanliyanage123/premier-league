@@ -180,10 +180,13 @@ public class ScoreCardFacadeImpl implements ScoreCardFacade {
         teamData.forEach(data -> battingSet.add(data.getBatsman()));
         team1BattingList = new ArrayList<>();
         for (String name : battingSet) {
-            int runs = teamData.stream().filter(player -> player.getBatsman().equals(name)).mapToInt(RowScoreData::getRunsOffBat).sum();
-            List<RowScoreData> bowler = teamData.stream().filter(player -> player.getBatsman().equals(name)).filter(data -> !data.getDismissedPlayed().equals("")).collect(Collectors.toList());
+            List<RowScoreData> batmanData = teamData.stream().filter(player -> player.getBatsman().equals(name)).collect(Collectors.toList());
+            List<RowScoreData> bowler = batmanData.stream().filter(data -> !data.getDismissedPlayed().equals("")).collect(Collectors.toList());
+            int runs = batmanData.stream().mapToInt(RowScoreData::getRunsOffBat).sum();
+            int sixes = (int) batmanData.stream().filter(run -> run.getRunsOffBat() == 6).count();
+            int fours = (int) batmanData.stream().filter(run -> run.getRunsOffBat() == 4).count();
             String outBy = bowler.isEmpty() ? "not out" : bowler.get(0).getBowler();
-            int bolls = (int) teamData.stream().filter(player -> player.getBatsman().equals(name)).count();
+            int bolls = batmanData.size();
             double sr = (double) runs / bolls;
             double strikeRate = Math.round(sr * 100.0) / 100.0;
             Player batsman = Player.builder()
@@ -191,6 +194,8 @@ public class ScoreCardFacadeImpl implements ScoreCardFacade {
                     .name(name)
                     .outBy(outBy)
                     .battedRuns(runs)
+                    .sixes(sixes)
+                    .fours(fours)
                     .balls(bolls)
                     .strikeRate(strikeRate * 100)
                     .isBatted(true)
@@ -204,10 +209,13 @@ public class ScoreCardFacadeImpl implements ScoreCardFacade {
         teamData.forEach(data -> battingSet.add(data.getBatsman()));
         team2BattingList = new ArrayList<>();
         for (String name : battingSet) {
-            List<RowScoreData> bowler = teamData.stream().filter(player -> player.getBatsman().equals(name)).filter(data -> !data.getDismissedPlayed().equals("")).collect(Collectors.toList());
+            List<RowScoreData> batmanData = teamData.stream().filter(player -> player.getBatsman().equals(name)).collect(Collectors.toList());
+            List<RowScoreData> bowler = batmanData.stream().filter(data -> !data.getDismissedPlayed().equals("")).collect(Collectors.toList());
+            int sixes = (int) batmanData.stream().filter(run -> run.getRunsOffBat() == 6).count();
+            int fours = (int) batmanData.stream().filter(run -> run.getRunsOffBat() == 4).count();
+            int runs = batmanData.stream().mapToInt(RowScoreData::getRunsOffBat).sum();
             String outBy = bowler.isEmpty() ? "not out" : bowler.get(0).getBowler();
-            int runs = teamData.stream().filter(player -> player.getBatsman().equals(name)).mapToInt(RowScoreData::getRunsOffBat).sum();
-            int bolls = (int) teamData.stream().filter(player -> player.getBatsman().equals(name)).count();
+            int bolls = batmanData.size();
             double sr = (double) runs / bolls;
             double strikeRate = Math.round(sr * 100.0) / 100.0;
             Player batsman = Player.builder()
@@ -216,6 +224,8 @@ public class ScoreCardFacadeImpl implements ScoreCardFacade {
                     .outBy(outBy)
                     .battedRuns(runs)
                     .balls(bolls)
+                    .sixes(sixes)
+                    .fours(fours)
                     .strikeRate(strikeRate * 100)
                     .isBatted(true)
                     .build();
