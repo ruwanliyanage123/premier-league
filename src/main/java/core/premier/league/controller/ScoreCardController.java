@@ -3,7 +3,6 @@ package core.premier.league.controller;
 import core.premier.league.entity.Player;
 import core.premier.league.exception.FileDataCollectionException;
 import core.premier.league.service.ScoreCardService;
-import core.premier.league.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

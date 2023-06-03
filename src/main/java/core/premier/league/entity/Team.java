@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Team {
+    private boolean isFirstBat;
     private String teamName;
     private int totalRuns;
     private double overs;

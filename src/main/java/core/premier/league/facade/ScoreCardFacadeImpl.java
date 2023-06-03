@@ -4,10 +4,13 @@ import core.premier.league.entity.Player;
 import core.premier.league.entity.RowScoreData;
 import core.premier.league.entity.Team;
 import core.premier.league.exception.FileDataCollectionException;
+import core.premier.league.exception.SummaryNotReadyException;
 import core.premier.league.util.Constants;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -28,8 +31,8 @@ public class ScoreCardFacadeImpl implements ScoreCardFacade {
     public Map<String, List<Player>> getFirstInningResults(String path) throws FileDataCollectionException {
         init(path);
         Map<String, List<Player>> firstInning = new HashMap<>();
-        firstInning.put(Constants.BATTING, team1BattingList);
-        firstInning.put(Constants.BOWLING, team2BowlingList);
+        firstInning.put(Constants.FIRST_BATTING, team1BattingList);
+        firstInning.put(Constants.FIRST_BOWLING, team2BowlingList);
         return firstInning;
     }
 
@@ -37,9 +40,30 @@ public class ScoreCardFacadeImpl implements ScoreCardFacade {
     public Map<String, List<Player>> getSecondInningResults(String path) throws FileDataCollectionException {
         init(path);
         Map<String, List<Player>> secondInning = new HashMap<>();
-        secondInning.put(Constants.BATTING, team2BattingList);
-        secondInning.put(Constants.BOWLING, team1BowlingList);
+        secondInning.put(Constants.SECOND_BATTING, team2BattingList);
+        secondInning.put(Constants.SECOND_BOWLING, team1BowlingList);
         return secondInning;
+    }
+
+    @Override
+    public Map<String, List<Player>> getMatchSummaryResult() throws SummaryNotReadyException {
+        if (team1BattingList == null || team2BowlingList == null || team2BattingList == null || team1BowlingList == null) {
+            throw new SummaryNotReadyException("Summary Not Ready Yet");
+        }
+        Map<String, List<Player>> summary = new HashMap<>();
+        List<Player> team1Bat = new ArrayList<>(team1BattingList);
+        List<Player> team2Bat = new ArrayList<>(team2BattingList);
+        List<Player> team1Bowl = new ArrayList<>(team1BowlingList);
+        List<Player> team2Bowl = new ArrayList<>(team2BowlingList);
+        team1Bat.sort(Comparator.comparing(Player::getBattedRuns, Comparator.reverseOrder()));
+        team2Bat.sort(Comparator.comparing(Player::getBattedRuns, Comparator.reverseOrder()));
+        team1Bowl.sort(Comparator.comparing(Player::getWickets, Comparator.reverseOrder()));
+        team2Bowl.sort(Comparator.comparing(Player::getWickets, Comparator.reverseOrder()));
+        summary.put(Constants.FIRST_BATTING, team1Bat);
+        summary.put(Constants.SECOND_BATTING, team2Bat);
+        summary.put(Constants.FIRST_BOWLING, team1Bowl);
+        summary.put(Constants.SECOND_BOWLING, team2Bowl);
+        return summary;
     }
 
     private void init(String path) throws FileDataCollectionException {

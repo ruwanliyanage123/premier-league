@@ -2,6 +2,7 @@ package core.premier.league.facade;
 
 import core.premier.league.entity.Player;
 import core.premier.league.exception.FileDataCollectionException;
+import core.premier.league.exception.SummaryNotReadyException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -27,4 +28,11 @@ public interface ScoreCardFacade {
      * @throws FileDataCollectionException exception
      */
     Map<String, List<Player>> getSecondInningResults(String path) throws FileDataCollectionException;
+
+    /**
+     * Return match summary result
+     *
+     * @return match summary
+     */
+    Map<String, List<Player>> getMatchSummaryResult() throws SummaryNotReadyException;
 }
