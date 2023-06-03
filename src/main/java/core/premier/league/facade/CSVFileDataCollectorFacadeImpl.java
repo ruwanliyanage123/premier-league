@@ -2,6 +2,7 @@ package core.premier.league.facade;
 
 import core.premier.league.entity.RowScoreData;
 import core.premier.league.exception.FileDataCollectionException;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -9,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class CSVFileDataCollectorFacadeImpl implements FileDataCollectorFacade {
+    private final List<RowScoreData> rowScoreDataList = new ArrayList<>();
+
     private CSVFileDataCollectorFacadeImpl() {
     }
 
@@ -22,7 +25,10 @@ public final class CSVFileDataCollectorFacadeImpl implements FileDataCollectorFa
 
     @Override
     public List<RowScoreData> collectData(String filePath) throws FileDataCollectionException {
-        List<RowScoreData> rowScoreDataList = new ArrayList<>();
+        return !rowScoreDataList.isEmpty() ? rowScoreDataList : getRowScoreDataList(filePath);
+    }
+
+    private List<RowScoreData> getRowScoreDataList(String filePath) throws FileDataCollectionException {
         try {
             int rowNumber = 0;
             String splitBy = ",";

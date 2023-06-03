@@ -1,15 +1,17 @@
 package core.premier.league.service;
 
-import core.premier.league.entity.RowScoreData;
+import core.premier.league.entity.Player;
 import core.premier.league.exception.FileDataCollectionException;
-import core.premier.league.facade.CSVFileDataCollectorFacadeImpl;
+import core.premier.league.facade.ScoreCardFacade;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class ScoreCardServiceImpl implements ScoreCardService{
+    @Autowired
+    private ScoreCardFacade scoreCardFacade;
     @Override
     public List<String> getFirstBatScore() {
         return null;
@@ -21,8 +23,8 @@ public class ScoreCardServiceImpl implements ScoreCardService{
     }
 
     @Override
-    public List<RowScoreData> getSecondBowledScore() throws FileDataCollectionException {
-        return CSVFileDataCollectorFacadeImpl.getInstance().collectData("/Users/ruwan/Desktop/LPL/match_result.csv");
+    public List<Player> getSecondBowledScore() throws FileDataCollectionException {
+        return scoreCardFacade.getFirstBattedTeamResults("/Users/ruwan/Desktop/LPL/match_result.csv");
     }
 
     @Override
