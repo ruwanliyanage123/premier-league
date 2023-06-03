@@ -1,6 +1,7 @@
 package core.premier.league.facade;
 
 import core.premier.league.entity.RowScoreData;
+import core.premier.league.exception.FileDataCollectionException;
 
 import java.util.List;
 
@@ -12,5 +13,5 @@ public interface FileDataCollectorFacade {
      * @param filePath file path to the row data file
      * @return collected row data
      */
-    List<RowScoreData> collectData(String filePath);
+    List<RowScoreData> collectData(String filePath) throws FileDataCollectionException;
 }

@@ -1,7 +1,7 @@
 package core.premier.league.facade;
 
-import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 import core.premier.league.entity.RowScoreData;
+import core.premier.league.exception.FileDataCollectionException;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -23,7 +23,7 @@ public final class CSVFileDataCollectorFacadeImpl implements FileDataCollectorFa
     }
 
     @Override
-    public List<RowScoreData> collectData(String filePath) {
+    public List<RowScoreData> collectData(String filePath) throws FileDataCollectionException {
         try {
             int rowNumber = 0;
             String splitBy = ",";
@@ -52,8 +52,8 @@ public final class CSVFileDataCollectorFacadeImpl implements FileDataCollectorFa
                 }
                 rowNumber++;
             }
-        } catch (Exception e) {
-
+        } catch (Exception exception) {
+            throw new FileDataCollectionException("Exception occur when row data collecting", exception);
         }
         return rowScoreDataList;
     }
