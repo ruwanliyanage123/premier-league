@@ -70,12 +70,15 @@ public class ScoreCardFacadeImpl implements ScoreCardFacade {
         team1BattingList = new ArrayList<>();
         for (String name: battingSet) {
             int runs = team1Data.stream().filter(player->player.getBatsman().equals(name)).mapToInt(RowScoreData::getRunsOffBat).sum();
+            List<RowScoreData> bowler = team1Data.stream().filter(player->player.getBatsman().equals(name)).filter(data->!data.getDismissedPlayed().equals("")).collect(Collectors.toList());
+            String outBy = bowler.isEmpty() ? "not out" : bowler.get(0).getBowler();
             int bolls = (int) team1Data.stream().filter(player -> player.getBatsman().equals(name)).count();
             double sr = (double) runs/bolls;
             double strikeRate = Math.round(sr * 100.0) / 100.0;
             Player team1Batsman = Player.builder()
                     .team(team1)
                     .name(name)
+                    .outBy(outBy)
                     .battedRuns(runs)
                     .numberOfBalls(bolls)
                     .strikeRate(strikeRate* 100)
@@ -102,6 +105,8 @@ public class ScoreCardFacadeImpl implements ScoreCardFacade {
         team2Data.forEach(data-> battingSet.add(data.getBatsman()));
         team2BattingList = new ArrayList<>();
         for (String name: battingSet) {
+            List<RowScoreData> bowler = team2Data.stream().filter(player->player.getBatsman().equals(name)).filter(data->!data.getDismissedPlayed().equals("")).collect(Collectors.toList());
+            String outBy = bowler.isEmpty() ? "not out" : bowler.get(0).getBowler();
             int runs = team2Data.stream().filter(player->player.getBatsman().equals(name)).mapToInt(RowScoreData::getRunsOffBat).sum();
             int bolls = (int) team2Data.stream().filter(player -> player.getBatsman().equals(name)).count();
             double sr = (double) runs/bolls;
@@ -109,6 +114,7 @@ public class ScoreCardFacadeImpl implements ScoreCardFacade {
             Player team1Batsman = Player.builder()
                     .team(team2)
                     .name(name)
+                    .outBy(outBy)
                     .battedRuns(runs)
                     .numberOfBalls(bolls)
                     .strikeRate(strikeRate*100)
