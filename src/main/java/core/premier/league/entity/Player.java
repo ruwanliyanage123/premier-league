@@ -14,13 +14,15 @@ public class Player {
    private String name;
    private Team team;
    private boolean isBowled;
-   private int getNumberOfWickets;
-   private double numberOfBowledOvers;
+   private int wickets;
+   private int bowledRuns;
+   private double overs;
    private boolean isBatted;
    private int battedRuns;
-   private int numberOfBalls;
+   private int balls;
+   private double economy;
    private double strikeRate;
-   private int numberOfSixes;
-   private int getNumberOfFours;
+   private int sixes;
+   private int fours;
    private String outBy;
 }

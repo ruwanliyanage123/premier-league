@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api/scorecard")
@@ -19,18 +20,18 @@ public class ScoreCardController {
     @Autowired
     private ScoreCardService scoreCardService;
     @GetMapping(value = "/first")
-    public ResponseEntity<List<Player>> getFirstBatScore(){
+    public ResponseEntity<Map<String, List<Player>> > getFirstBatScore(){
         try {
-            return new ResponseEntity<>(scoreCardService.getFirstInning().get(Constants.BATTING), HttpStatus.OK);
+            return new ResponseEntity<>(scoreCardService.getFirstInning(), HttpStatus.OK);
         } catch (FileDataCollectionException exception) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 
     @GetMapping(value = "/second")
-    public ResponseEntity<List<Player>> getSecondBatScore(){
+    public ResponseEntity<Map<String, List<Player>>> getSecondBatScore(){
         try {
-            return new ResponseEntity<>(scoreCardService.getSecondInning().get(Constants.BATTING), HttpStatus.OK);
+            return new ResponseEntity<>(scoreCardService.getSecondInning(), HttpStatus.OK);
         } catch (FileDataCollectionException exception) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
