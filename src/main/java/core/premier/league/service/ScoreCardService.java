@@ -5,11 +5,10 @@ import core.premier.league.exception.FileDataCollectionException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public interface ScoreCardService {
-    List<String> getFirstBatScore();
-    List<String> getSecondBatScore();
-    List<Player> getSecondBowledScore() throws FileDataCollectionException;
-    List<String> getFirstBowledScore();
+    Map<String, List<Player>> getFirstInning() throws FileDataCollectionException;
+    Map<String, List<Player>> getSecondInning();
 }

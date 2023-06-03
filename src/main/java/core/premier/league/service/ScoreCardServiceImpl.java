@@ -7,28 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ScoreCardServiceImpl implements ScoreCardService{
     @Autowired
     private ScoreCardFacade scoreCardFacade;
+
     @Override
-    public List<String> getFirstBatScore() {
+    public Map<String, List<Player>> getFirstInning() throws FileDataCollectionException {
+        scoreCardFacade.getFirstInningResults("/Users/ruwan/Desktop/LPL/match_result.csv");
         return null;
     }
 
     @Override
-    public List<String> getSecondBatScore() {
-        return null;
-    }
-
-    @Override
-    public List<Player> getSecondBowledScore() throws FileDataCollectionException {
-        return scoreCardFacade.getFirstBattedTeamResults("/Users/ruwan/Desktop/LPL/match_result.csv");
-    }
-
-    @Override
-    public List<String> getFirstBowledScore() {
+    public Map<String, List<Player>> getSecondInning() {
         return null;
     }
 }
