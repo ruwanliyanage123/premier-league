@@ -1,6 +1,7 @@
 package core.premier.league.controller;
 
 import core.premier.league.entity.RowScoreData;
+import core.premier.league.exception.FileDataCollectionException;
 import core.premier.league.service.ScoreCardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,8 +18,12 @@ public class ScoreCardController {
     @Autowired
     private ScoreCardService scoreCardService;
     @GetMapping(value = "/firstbat")
-    public ResponseEntity<List<String>> getFirstBatScore(){
+    public ResponseEntity<List<RowScoreData>> getFirstBatScore(){
         System.out.println("the controller");
-        return new ResponseEntity<>(scoreCardService.getSecondBowledScore(), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(scoreCardService.getSecondBowledScore(), HttpStatus.OK);
+        } catch (FileDataCollectionException e) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 }

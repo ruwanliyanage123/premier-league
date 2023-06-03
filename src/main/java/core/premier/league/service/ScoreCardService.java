@@ -1,5 +1,7 @@
 package core.premier.league.service;
 
+import core.premier.league.entity.RowScoreData;
+import core.premier.league.exception.FileDataCollectionException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,6 +10,6 @@ import java.util.List;
 public interface ScoreCardService {
     List<String> getFirstBatScore();
     List<String> getSecondBatScore();
-    List<String> getSecondBowledScore();
+    List<RowScoreData> getSecondBowledScore() throws FileDataCollectionException;
     List<String> getFirstBowledScore();
 }

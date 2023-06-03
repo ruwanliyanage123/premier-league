@@ -38,14 +38,14 @@ public final class CSVFileDataCollectorFacadeImpl implements FileDataCollectorFa
                             .batsman(record[3])
                             .nonStriker(record[4])
                             .bowler(record[5])
-                            .runsOffBat(Integer.parseInt(record[6]))
-                            .extras(Integer.parseInt(record[7]))
-                            .wides(Integer.parseInt(record[8]))
-                            .noBolls(Integer.parseInt(record[9]))
-                            .byes(Integer.parseInt(record[10]))
-                            .legByes(Integer.parseInt(record[11]))
-                            .kindOfWickets(record[12])
-                            .dismissedPlayed(record[13])
+                            .runsOffBat(validateNumberScore(record, 6))
+                            .extras(validateNumberScore(record, 7))
+                            .wides(validateNumberScore(record, 8))
+                            .noBolls(validateNumberScore(record, 9))
+                            .byes(validateNumberScore(record, 10))
+                            .legByes(validateNumberScore(record, 11))
+                            .kindOfWickets(validateStringScore(record, 12))
+                            .dismissedPlayed(validateStringScore(record, 13))
                             .build();
                     rowScoreDataList.add(rowScoreData);
                 }
@@ -55,5 +55,16 @@ public final class CSVFileDataCollectorFacadeImpl implements FileDataCollectorFa
             throw new FileDataCollectionException("Exception occur when row data collecting", exception);
         }
         return rowScoreDataList;
+    }
+
+    private Integer validateNumberScore(String[] score, int index) {
+        if (index >= score.length) {
+            return 0;
+        }
+        return score[index].equals("") ? 0 : Integer.parseInt(score[index]);
+    }
+
+    private String validateStringScore(String[] score, int index) {
+        return index < score.length ? score[index] : "";
     }
 }
