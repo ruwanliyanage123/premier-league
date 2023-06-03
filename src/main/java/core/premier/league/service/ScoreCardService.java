@@ -10,5 +10,6 @@ import java.util.Map;
 @Service
 public interface ScoreCardService {
     Map<String, List<Player>> getFirstInning() throws FileDataCollectionException;
-    Map<String, List<Player>> getSecondInning()throws FileDataCollectionException;
+
+    Map<String, List<Player>> getSecondInning() throws FileDataCollectionException;
 }

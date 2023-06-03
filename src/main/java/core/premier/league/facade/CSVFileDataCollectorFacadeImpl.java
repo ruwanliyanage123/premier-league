@@ -2,7 +2,6 @@ package core.premier.league.facade;
 
 import core.premier.league.entity.RowScoreData;
 import core.premier.league.exception.FileDataCollectionException;
-import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

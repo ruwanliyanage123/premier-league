@@ -11,9 +11,10 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class SummaryServiceImpl implements SummaryService{
+public class SummaryServiceImpl implements SummaryService {
     @Autowired
     private ScoreCardFacade scoreCardFacade;
+
     @Override
     public Summary findMatchSummary() throws SummaryNotReadyException {
         return scoreCardFacade.getMatchSummary();

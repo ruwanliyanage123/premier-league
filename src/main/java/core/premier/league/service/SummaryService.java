@@ -11,5 +11,6 @@ import java.util.Map;
 @Service
 public interface SummaryService {
     Summary findMatchSummary() throws SummaryNotReadyException;
+
     Map<String, List<Player>> findSummaryResult() throws SummaryNotReadyException;
 }

@@ -2,9 +2,7 @@ package core.premier.league.controller;
 
 import core.premier.league.entity.Player;
 import core.premier.league.entity.Summary;
-import core.premier.league.exception.FileDataCollectionException;
 import core.premier.league.exception.SummaryNotReadyException;
-import core.premier.league.service.ScoreCardService;
 import core.premier.league.service.SummaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

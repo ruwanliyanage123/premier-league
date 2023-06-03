@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class ScoreCardServiceImpl implements ScoreCardService{
+public class ScoreCardServiceImpl implements ScoreCardService {
     @Autowired
     private ScoreCardFacade scoreCardFacade;
 
@@ -20,7 +20,7 @@ public class ScoreCardServiceImpl implements ScoreCardService{
     }
 
     @Override
-    public Map<String, List<Player>> getSecondInning() throws FileDataCollectionException{
+    public Map<String, List<Player>> getSecondInning() throws FileDataCollectionException {
         return scoreCardFacade.getSecondInningResults("/Users/ruwan/Desktop/LPL/match_result.csv");
     }
 }
