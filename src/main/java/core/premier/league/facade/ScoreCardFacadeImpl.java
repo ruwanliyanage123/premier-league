@@ -19,12 +19,10 @@ import java.util.stream.Collectors;
 public class ScoreCardFacadeImpl implements ScoreCardFacade {
     private Team team1;
     private Team team2;
-
     private List<Player> team1BattingList;
     private List<Player> team2BattingList;
     private List<Player> team1BowlingList;
     private List<Player> team2BowlingList;
-
 
     @Override
     public Map<String, List<Player>> getFirstInningResults(String path) throws FileDataCollectionException {
@@ -99,11 +97,11 @@ public class ScoreCardFacadeImpl implements ScoreCardFacade {
             int buys = bowlerData.stream().mapToInt(RowScoreData::getByes).sum();
             int legBuy = bowlerData.stream().mapToInt(RowScoreData::getLegByes).sum();
             int wickets = (int) bowlerData.stream().filter(data -> !data.getDismissedPlayed().equals("")).count();
-            int wides = (int)bowlerData.stream().filter(ball -> ball.getWides() != 0).count();
-            int no = (int)bowlerData.stream().filter(ball -> ball.getNoBolls() != 0).count();
+            int wides = (int) bowlerData.stream().filter(ball -> ball.getWides() != 0).count();
+            int no = (int) bowlerData.stream().filter(ball -> ball.getNoBolls() != 0).count();
             int balls = bowlerData.size() - wides - no;
             double overs = getOvers(balls);
-            double eco = (double) (runs + buys + legBuy)/overs;
+            double eco = (double) (runs + buys + legBuy) / overs;
             double economy = Math.round(eco * 100.0) / 100.0;
             Player bowler = Player.builder()
                     .team(team1)
@@ -128,11 +126,11 @@ public class ScoreCardFacadeImpl implements ScoreCardFacade {
             int buys = bowlerData.stream().mapToInt(RowScoreData::getByes).sum();
             int legBuy = bowlerData.stream().mapToInt(RowScoreData::getLegByes).sum();
             int wickets = (int) bowlerData.stream().filter(data -> !data.getDismissedPlayed().equals("")).count();
-            int wides = (int)bowlerData.stream().filter(ball -> ball.getWides() != 0).count();
-            int no = (int)bowlerData.stream().filter(ball -> ball.getNoBolls() != 0).count();
+            int wides = (int) bowlerData.stream().filter(ball -> ball.getWides() != 0).count();
+            int no = (int) bowlerData.stream().filter(ball -> ball.getNoBolls() != 0).count();
             int balls = bowlerData.size() - wides - no;
             double overs = getOvers(balls);
-            double eco = (double) (runs + buys + legBuy)/overs;
+            double eco = (double) (runs + buys + legBuy) / overs;
             double economy = Math.round(eco * 100.0) / 100.0;
             Player bowler = Player.builder()
                     .team(team2)
@@ -147,8 +145,8 @@ public class ScoreCardFacadeImpl implements ScoreCardFacade {
         }
     }
 
-    private double getOvers(int balls){
-        int fullOvers = balls /6;
+    private double getOvers(int balls) {
+        int fullOvers = balls / 6;
         int remain = balls % 6;
         return (double) fullOvers + (remain * 0.1);
     }
