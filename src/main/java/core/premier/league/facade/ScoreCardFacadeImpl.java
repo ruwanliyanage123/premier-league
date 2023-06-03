@@ -182,10 +182,10 @@ public class ScoreCardFacadeImpl implements ScoreCardFacade {
         for (String name : battingSet) {
             List<RowScoreData> batmanData = teamData.stream().filter(player -> player.getBatsman().equals(name)).collect(Collectors.toList());
             List<RowScoreData> bowler = batmanData.stream().filter(data -> !data.getDismissedPlayed().equals("")).collect(Collectors.toList());
+            String outBy = bowler.isEmpty() ? "not out" : bowler.get(0).getBowler();
             int runs = batmanData.stream().mapToInt(RowScoreData::getRunsOffBat).sum();
             int sixes = (int) batmanData.stream().filter(run -> run.getRunsOffBat() == 6).count();
             int fours = (int) batmanData.stream().filter(run -> run.getRunsOffBat() == 4).count();
-            String outBy = bowler.isEmpty() ? "not out" : bowler.get(0).getBowler();
             int bolls = batmanData.size();
             double sr = (double) runs / bolls;
             double strikeRate = Math.round(sr * 100.0) / 100.0;
@@ -211,10 +211,10 @@ public class ScoreCardFacadeImpl implements ScoreCardFacade {
         for (String name : battingSet) {
             List<RowScoreData> batmanData = teamData.stream().filter(player -> player.getBatsman().equals(name)).collect(Collectors.toList());
             List<RowScoreData> bowler = batmanData.stream().filter(data -> !data.getDismissedPlayed().equals("")).collect(Collectors.toList());
+            String outBy = bowler.isEmpty() ? "not out" : bowler.get(0).getBowler();
             int sixes = (int) batmanData.stream().filter(run -> run.getRunsOffBat() == 6).count();
             int fours = (int) batmanData.stream().filter(run -> run.getRunsOffBat() == 4).count();
             int runs = batmanData.stream().mapToInt(RowScoreData::getRunsOffBat).sum();
-            String outBy = bowler.isEmpty() ? "not out" : bowler.get(0).getBowler();
             int bolls = batmanData.size();
             double sr = (double) runs / bolls;
             double strikeRate = Math.round(sr * 100.0) / 100.0;
