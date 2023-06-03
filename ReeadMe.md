@@ -31,3 +31,11 @@ Used design patterns
 -singleton
 -facade
 -builder
+
+
+shortcomings of previous version.
+
+-there are no support to provide the difference row data collecting ways (.excl, pdf, txt) 
+    -violated the SOLID  - Open to extend and close to modify
+    -violated the SOLID  - Single Responsibility
+    -If we need to change the way of data collecting, need to find the usages of the everyWhere and need to update the all of the places
