@@ -114,7 +114,7 @@ public class ScoreCardFacadeImpl implements ScoreCardFacade {
                 .teamName(team1Name)
                 .extras(extrasByTeam1)
                 .wickets(wickets)
-                .overs(team1Data.get(team1Data.size() - 1).getOverAndBall())
+                .overs(setOvers(team1Data.get(team1Data.size() - 1).getOverAndBall()))
                 .totalRuns(extrasByTeam1 + runOfBatByTeam1)
                 .build();
         setTeam1BattingResult(team1Data);
@@ -131,10 +131,17 @@ public class ScoreCardFacadeImpl implements ScoreCardFacade {
                 .teamName(team2Name)
                 .wickets(wickets)
                 .totalRuns(extrasByTeam2 + runOfBatByTeam2)
-                .overs(team2Data.get(team2Data.size() - 1).getOverAndBall())
+                .overs(setOvers(team2Data.get(team2Data.size() - 1).getOverAndBall()))
                 .build();
         setTeam2BattingResult(team2Data);
         setTeam1BowlingResult(team2Data);
+    }
+
+    private double setOvers(double over){
+        if(!String.valueOf(over).endsWith("6")){
+            return over;
+        }
+        return over - 0.6 + 1;
     }
 
     private void setTeam1BowlingResult(List<RowScoreData> teamData) {
